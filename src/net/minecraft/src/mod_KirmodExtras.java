@@ -8,6 +8,7 @@ package net.minecraft.src;
  *     Beta Mob Wandering, Crop Catch-Up; Mob Spawning: Passive Spawning, Passive Mob Cap, Passive Spawn Ground
  *   - Minecarts: Minecart Speed, Minecart Speed Limit
  *   - Camera: Freecam, Freecam Speed
+ *   - Signs (under Gameplay): Sign Editing, Sign Item Display
  *
  * Needs Kirmod 1.33 or later (1.33 moved Kirmod's own Gameplay tab here). The settings keep their Kirmod.cfg keys, commands and keys (Freecam Y,
  * Fullbright U, Item Magnet L), so moving from Kirmod 1.25 keeps every value. Without this mod those
@@ -21,16 +22,19 @@ public class mod_KirmodExtras extends BaseMod
     /** Under Gameplay, like World: how animals spawn. */
     public static final String CATEGORY_MOB_SPAWNING = "Mob Spawning";
 
+    /** Under Gameplay: editing signs and the items they show. */
+    public static final String CATEGORY_SIGNS = "Signs";
+
     public static final KirPlugin PLUGIN = new KirPlugin("Kirmod Extras", "1.4", "Gameplay extras for Kirmod: Item Magnet, Mining Delay, Fullbright, Tripwire Transmutation, Beta Mob Wandering, Crop Catch-Up, Passive Spawning, Minecart Speed and Freecam.", 266)
     {
         public String getCategoryDescription(String category)
         {
-            return KirModule.CATEGORY_GAMEPLAY.equals(category) ? "Item pickup, mining, lighting and the tripwire bug." : (CATEGORY_MINECARTS.equals(category) ? "Faster minecarts on rails." : (KirModuleIsometric.CATEGORY_CAMERA.equals(category) ? "Freecam: fly the camera away from the player." : (KirModule.CATEGORY_WORLD.equals(category) ? "World rules: the tripwire transmutation bug, Beta's far mob wandering and crops growing while you are away." : (CATEGORY_MOB_SPAWNING.equals(category) ? "How animals spawn: like hostile mobs, at any light level, with a higher cap." : null))));
+            return KirModule.CATEGORY_GAMEPLAY.equals(category) ? "Item pickup, mining, lighting and the tripwire bug." : (CATEGORY_MINECARTS.equals(category) ? "Faster minecarts on rails." : (KirModuleIsometric.CATEGORY_CAMERA.equals(category) ? "Freecam: fly the camera away from the player." : (KirModule.CATEGORY_WORLD.equals(category) ? "World rules: the tripwire transmutation bug, Beta's far mob wandering and crops growing while you are away." : (CATEGORY_MOB_SPAWNING.equals(category) ? "How animals spawn: like hostile mobs, at any light level, with a higher cap." : (CATEGORY_SIGNS.equals(category) ? "Editing placed signs, and signs that show the item they name." : null)))));
         }
 
         public String getParentCategory(String category)
         {
-            return CATEGORY_MOB_SPAWNING.equals(category) ? KirModule.CATEGORY_GAMEPLAY : super.getParentCategory(category);
+            return CATEGORY_MOB_SPAWNING.equals(category) || CATEGORY_SIGNS.equals(category) ? KirModule.CATEGORY_GAMEPLAY : super.getParentCategory(category);
         }
     };
 
@@ -45,6 +49,8 @@ public class mod_KirmodExtras extends BaseMod
     public static final KirModuleFishing FISHING = new KirModuleFishing();
     public static final KirModuleAutoTrader AUTO_TRADER = new KirModuleAutoTrader();
     public static final KirModulePaintingPicker PAINTING_PICKER = new KirModulePaintingPicker();
+    public static final KirModuleSignEditing SIGN_EDITING = new KirModuleSignEditing();
+    public static final KirModuleSignItems SIGN_ITEMS = new KirModuleSignItems();
     public static final KirModuleCraftingGridStorage CRAFTING_GRID_STORAGE = new KirModuleCraftingGridStorage();
     public static final KirModuleLavaDecay LAVA_DECAY = new KirModuleLavaDecay();
     public static final KirModuleInfiniteWater INFINITE_WATER = new KirModuleInfiniteWater();
@@ -93,6 +99,8 @@ public class mod_KirmodExtras extends BaseMod
         mod_Kirmod.registerModule(PLUGIN, AUTO_TRADER);
         mod_Kirmod.registerModule(PLUGIN, PAINTING_PICKER);
         mod_Kirmod.registerModule(PLUGIN, CRAFTING_GRID_STORAGE);
+        mod_Kirmod.registerModule(PLUGIN, SIGN_EDITING);
+        mod_Kirmod.registerModule(PLUGIN, SIGN_ITEMS);
         mod_Kirmod.registerModule(PLUGIN, LAVA_DECAY);
         mod_Kirmod.registerModule(PLUGIN, INFINITE_WATER);
         mod_Kirmod.registerModule(PLUGIN, TRIPWIRE_TRANSMUTATION);
